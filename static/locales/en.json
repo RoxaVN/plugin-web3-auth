@@ -1,0 +1,10 @@
+{
+  "Error": {
+    "NotLinkedAddressException": "The address isn't linked to any account",
+    "LinkedAddressException": "The address is already linked to another account"
+  },
+  "Meta": {
+    "name": "Web3 authentication",
+    "description": "Web3 authentication"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "Error": {
+    "NotLinkedAddressException": "Địa chỉ chưa được liên kết với tài khoản nào",
+    "LinkedAddressException": "Địa chỉ đã được liên kết với tài khoản khác"
+  },
+  "Meta": {
+    "name": "Xác thực trên Web3",
+    "description": "Xác thực trên Web3"
+  }
+}
