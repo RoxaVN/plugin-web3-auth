@@ -1,9 +1,10 @@
 {
   "name": "@roxavn/plugin-web3-auth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "roxavn build",
     "dev": "roxavn dev",
+    "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
   "license": "MIT",
@@ -60,6 +61,8 @@
     }
   },
   "files": [
+    "CHANGELOG.md",
+    "LICENSE.txt",
     "/dist",
     "/static"
   ]
