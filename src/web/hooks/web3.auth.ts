@@ -40,9 +40,11 @@ async function loginWeb3(address: string, registerHanlder: () => void) {
   }
 }
 
-async function checkIdentity(address: string) {
+async function checkIdentity(userId: string, address: string) {
   try {
-    const identities = await apiFetcher.fetch(userIdentityApi.getAll);
+    const identities = await apiFetcher.fetch(userIdentityApi.getAll, {
+      userId,
+    });
     const identity = identities.items.find(
       (item) =>
         item.subject === address.toLowerCase() &&
@@ -78,7 +80,7 @@ export function useWeb3Auth(registerHanlder: () => void) {
   useEffect(() => {
     if (!loading && address) {
       if (user) {
-        checkIdentity(address);
+        checkIdentity(user.id, address);
       } else {
         loginWeb3(address, registerHanlder);
       }
