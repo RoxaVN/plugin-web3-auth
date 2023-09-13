@@ -12,7 +12,7 @@ import {
 } from '@roxavn/core/server';
 import { GetIdentityBytypeService } from '@roxavn/module-user/server';
 import { TokenService } from '@roxavn/module-utils/server';
-import { eth } from 'web3';
+import { recoverMessageAddress } from 'viem';
 
 import { Web3Auth } from '../entities/web3.auth.entity.js';
 import { serverModule } from '../module.js';
@@ -106,9 +106,11 @@ export class Web3AuthService extends BaseService {
       throw new ExpiredException();
     }
 
-    const address = eth.accounts
-      .recover(web3auth.message, request.signature)
-      .toLowerCase();
+    let address: string = await recoverMessageAddress({
+      message: web3auth.message,
+      signature: request.signature as any,
+    });
+    address = address.toLowerCase();
     if (address !== web3auth.address.toLowerCase()) {
       throw new BadRequestException();
     }
