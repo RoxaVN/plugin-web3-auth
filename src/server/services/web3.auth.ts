@@ -50,7 +50,7 @@ export class CreateWeb3AuthService extends BaseService {
     const web3auth = new Web3Auth();
     web3auth.address = request.address;
     web3auth.message = message;
-    await this.databaseService.manager.save(web3auth);
+    await this.databaseService.manager.getRepository(Web3Auth).save(web3auth);
 
     return { id: web3auth.id, message };
   }
