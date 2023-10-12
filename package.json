@@ -33,8 +33,6 @@
     "@roxavn/core": "^0.2.0",
     "@roxavn/module-user": "^0.2.0",
     "@tabler/icons-react": "^2.12.0",
-    "@web3modal/ethereum": "^2.7.1",
-    "@web3modal/react": "^2.7.1",
     "react": "^18.2.0",
     "typeorm": "^0.3.10",
     "viem": "^1.5.4",
