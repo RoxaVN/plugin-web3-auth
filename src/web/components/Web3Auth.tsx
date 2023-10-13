@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useWeb3Auth } from '../hooks/index.js';
 
 export interface Web3AuthProps {
-  registerComponent: JSX.Element;
+  registerComponent: (setModalStatus: (opened: boolean) => void) => JSX.Element;
   guestComponent: (openWeb3Modal: () => void) => JSX.Element;
   userComponent: (data: {
     user: Record<string, any>;
@@ -24,15 +24,15 @@ export function Web3Auth({
   const web3Modal = useWeb3Modal();
   const { t } = webModule.useTranslation();
 
+  if (user && address) {
+    return userComponent({ user, address });
+  }
   if (open) {
     return (
       <Modal opened={open} onClose={() => setOpen(false)} title={t('register')}>
-        {registerComponent}
+        {registerComponent(setOpen)}
       </Modal>
     );
-  }
-  if (user && address) {
-    return userComponent({ user, address });
   }
   return guestComponent(web3Modal.open);
 }
