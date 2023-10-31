@@ -28,7 +28,6 @@ async function loginWeb3(address: string, registerHanlder: () => void) {
       web3AuthId: web3Auth.id,
       signature: signature,
     });
-    authService.setTokenData(tokenAuth);
     await authService.authenticate(tokenAuth);
   } catch (e: any) {
     const error = apiFetcher.getErrorData(e);
