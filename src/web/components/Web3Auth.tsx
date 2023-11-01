@@ -12,15 +12,20 @@ export interface Web3AuthProps {
     user: Record<string, any>;
     address: string;
   }) => JSX.Element;
+  onSuccess?: () => void;
 }
 
 export function Web3Auth({
   userComponent,
   guestComponent,
   registerComponent,
+  onSuccess,
 }: Web3AuthProps) {
   const [open, setOpen] = useState(false);
-  const { user, address } = useWeb3Auth(() => setOpen(true));
+  const { user, address } = useWeb3Auth({
+    onSuccess,
+    onRegister: () => setOpen(true),
+  });
   const web3Modal = useWeb3Modal();
   const { t } = webModule.useTranslation();
 

@@ -17,7 +17,11 @@ import {
   web3AuthApi,
 } from '../../base/index.js';
 
-async function loginWeb3(address: string, registerHanlder: () => void) {
+async function loginWeb3(
+  address: string,
+  onRegister: () => void,
+  onSuccess?: () => void
+) {
   try {
     const web3Auth = await apiFetcher.fetch(web3AuthApi.create, {
       address: address,
@@ -29,17 +33,22 @@ async function loginWeb3(address: string, registerHanlder: () => void) {
       signature: signature,
     });
     await authService.authenticate(tokenAuth);
+    onSuccess && onSuccess();
   } catch (e: any) {
     const error = apiFetcher.getErrorData(e);
     if (error?.type === NotLinkedAddressException.name) {
-      registerHanlder();
+      onRegister();
     } else {
       uiManager.errorModal(e);
     }
   }
 }
 
-async function checkIdentity(userId: string, address: string) {
+async function checkIdentity(
+  userId: string,
+  address: string,
+  onSuccess?: () => void
+) {
   try {
     const identities = await apiFetcher.fetch(userIdentityApi.getAll, {
       userId,
@@ -60,6 +69,7 @@ async function checkIdentity(userId: string, address: string) {
         web3AuthId: web3Auth.id,
       });
     }
+    onSuccess && onSuccess();
   } catch (e: any) {
     uiManager.errorModal(e);
     const error = apiFetcher.getErrorData(e);
@@ -72,16 +82,22 @@ async function checkIdentity(userId: string, address: string) {
   }
 }
 
-export function useWeb3Auth(registerHanlder: () => void) {
+export function useWeb3Auth({
+  onRegister,
+  onSuccess,
+}: {
+  onRegister: () => void;
+  onSuccess?: () => void;
+}) {
   const { user, loading } = useAuthData();
   const { address } = useAccount();
 
   useEffect(() => {
     if (!loading && address) {
       if (user) {
-        checkIdentity(user.id, address);
+        checkIdentity(user.id, address, onSuccess);
       } else {
-        loginWeb3(address, registerHanlder);
+        loginWeb3(address, onRegister, onSuccess);
       }
     }
   }, [user, address, loading]);
