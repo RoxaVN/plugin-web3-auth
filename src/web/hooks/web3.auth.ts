@@ -9,13 +9,7 @@ import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { signMessage } from 'wagmi/actions';
 
-import {
-  LinkedAddressException,
-  NotLinkedAddressException,
-  constants,
-  identityApi,
-  web3AuthApi,
-} from '../../base/index.js';
+import { constants, identityApi, web3AuthApi } from '../../base/index.js';
 
 async function loginWeb3(
   address: string,
@@ -36,7 +30,7 @@ async function loginWeb3(
     onSuccess && onSuccess();
   } catch (e: any) {
     const error = apiFetcher.getErrorData(e);
-    if (error?.type === NotLinkedAddressException.name) {
+    if (error?.type === 'NotLinkedAddressException') {
       onRegister();
     } else {
       uiManager.errorModal(e);
@@ -73,7 +67,8 @@ async function checkIdentity(
   } catch (e: any) {
     uiManager.errorModal(e);
     const error = apiFetcher.getErrorData(e);
-    if (error?.type === LinkedAddressException.name) {
+    if (error?.type === 'LinkedAddressException') {
+      // TODO: must check without magic string
       const tokenData = authService.getTokenData();
       if (tokenData) {
         authService.logout(tokenData);
