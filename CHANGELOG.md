@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/RoxaVN/roxavn/compare/v0.1.2...v0.1.3) (2023-11-23)
+
+### Bug Fixes
+
+- lost classname after build production ([4bf727c](https://github.com/RoxaVN/roxavn/commit/4bf727c85604158616a6383fe5ea337c62d36c18))
+
 ### [0.1.2](https://github.com/RoxaVN/roxavn/compare/v0.1.1...v0.1.2) (2023-11-11)
 
 ### Features
