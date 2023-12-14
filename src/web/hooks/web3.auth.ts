@@ -69,10 +69,7 @@ async function checkIdentity(
     const error = apiFetcher.getErrorData(e);
     if (error?.type === 'LinkedAddressException') {
       // TODO: must check without magic string
-      const tokenData = authService.getTokenData();
-      if (tokenData) {
-        authService.logout(tokenData);
-      }
+      authService.logout();
     }
   }
 }
