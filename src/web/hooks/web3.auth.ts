@@ -7,7 +7,7 @@ import {
 import { userIdentityApi } from '@roxavn/module-user/base';
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { signMessage } from 'wagmi/actions';
+import { disconnect, signMessage } from 'wagmi/actions';
 
 import { constants, identityApi, web3AuthApi } from '../../base/index.js';
 
@@ -92,6 +92,13 @@ export function useWeb3Auth({
         loginWeb3(address, onRegister, onSuccess);
       }
     }
+
+    const sub = authService.authObserver.subscribe((authUser) => {
+      if (!authUser) {
+        disconnect();
+      }
+    });
+    return () => sub.unsubscribe();
   }, [user, address, loading]);
 
   return { user, address };
